@@ -1,20 +1,21 @@
     // étape 1.1 : Récupération des travaux depuis le back-end
-    function generateWorks(works) {
+    
+function generateWorks(works) {
 
-        const gallery = document.querySelector('.gallery');
-        for (let i = 0; i < works.length; i++) {
+    const gallery = document.querySelector('.gallery');
+    for (let i = 0; i < works.length; i++) {
            
-            const figureElement = document.createElement('figure');
-            const imageElement = document.createElement('img');
-            imageElement.src = works[i].imageUrl;
-            const figcaptionElement = document.createElement('figcaption');
-            figcaptionElement.innerText = works[i].title;   
-            
-            gallery.appendChild(figureElement);            
-            figureElement.appendChild(imageElement)
-            figureElement.appendChild(figcaptionElement);
-        }
+        const figureElement = document.createElement('figure');
+        const imageElement = document.createElement('img');
+        imageElement.src = works[i].imageUrl;    
+        const figcaptionElement = document.createElement('figcaption');
+        figcaptionElement.innerText = works[i].title;   
+        
+        gallery.appendChild(figureElement);            
+        figureElement.appendChild(imageElement)
+        figureElement.appendChild(figcaptionElement);
     }
+}
 
 document.addEventListener("DOMContentLoaded", async function() {
 
@@ -26,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         // Étape 1.2 : Réalisation du filtre des travaux
     
     // filtre tous
-    
+
     const tousFilter = document.createElement("li");
     tousFilter.textContent = "Tous";
     
@@ -39,41 +40,64 @@ document.addEventListener("DOMContentLoaded", async function() {
     tousFilter.addEventListener("click", function() {
         const tousElements = Array.from(gallery.querySelectorAll('figure'));
         for (let i = 0; i < tousElements.length; i++) {
-            tousElements[i].classList.remove("hidden");
-        }
-    })
+            tousElements[i].classList.remove("hidden")
+        };
+    });
     
-    // autres filtres
+    // filtre objets
+    const categoriesIdObjets = works.filter(work => work.categoryId === 2 || work.categoryId === 3).map(work => work.id);
     
-    const objetsFilter = document.querySelector(".objets-filter")
-    
+    const objetsFilter = document.createElement("li");
+    objetsFilter.textContent = "Objets";
+
+    allFilterElements.appendChild(objetsFilter);
+
     objetsFilter.addEventListener("click", function() {
-        const objetsFiltered = works.filter(function (works) {
-            return works.categoryId === 1;
-        });
-        document.querySelector(".gallery").innerHTML = "";
-        generateWorks(objetsFiltered);
-    })
-    
-    const appartementsFilter = document.querySelector(".appartements-filter")
+        const objetsElements = document.createElement('ul');
+        for (let i = 0 ; i < categoriesIdObjets.length ; i++) {
+            const objetElement = document.createElement('li');
+            objetElement.innerText = categoriesIdObjets[i];
+            objetsElements.appendChild(objetElement)
+        };
+        document.querySelector('.gallery').appendChild(objetsElements)
+     });
+
+    // filtre appartements
+    const categoriesIdAppartements = works.filter(work => work.categoryId === 1 || work.categoryId === 3).map(work => work.id);
+
+    const appartementsFilter = document.createElement("li");
+    appartementsFilter.textContent = "Appartements";
+
+    allFilterElements.appendChild(appartementsFilter);
     
     appartementsFilter.addEventListener("click", function() {
-        const appartementsFiltered = works.filter(function (works) {
-            return works.categoryId === 2;
-        });
-        document.querySelector(".gallery").innerHTML = "";
-        generateWorks(appartementsFiltered);
-    })
+        const appartementsElements = document.createElement('ul');
+        for (let i = 0 ; i < categoriesIdAppartements.length ; i++) {
+            const appartementElement = document.createElement('li');
+            appartementElement.innerText = categoriesIdAppartements[i];
+            appartementsElements.appendChild(appartementElement)
+        };
+        document.querySelector('.gallery').appendChild(appartementsElements)
+     });
     
-    const hotelsFilter = document.querySelector(".hotels-filter")
+
+    // filtre hôtels et restaurants
+    const categoriesIdHotels = works.filter(work => work.categoryId === 1 || work.categoryId === 2).map(work => work.id);
+
+    const hotelsFilter = document.createElement("li")
+    hotelsFilter.textContent = "Hôtels et restaurants";
+
+    allFilterElements.appendChild(hotelsFilter);
     
     hotelsFilter.addEventListener("click", function() {
-        const hotelsFiltered = works.filter(function (works) {
-            return works.categoryId === 3;
-        });
-        document.querySelector(".gallery").innerHTML = "";
-        generateWorks(hotelsFiltered);
-    })
+        const hotelsElements = document.createElement('ul');
+        for (let i = 0 ; i < categoriesIdHotels.length ; i++) {
+            const hotelElement = document.createElement('li');
+            hotelElement.innerText = categoriesIdHotels[i];
+            hotelsElements.appendChild(hotelElement)
+        };
+        document.querySelector('.gallery').appendChild(hotelsElements)
+     });
 });
 
 

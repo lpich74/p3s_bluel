@@ -129,6 +129,20 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+#filtres {
+	display: flex;
+	justify-content: center;
+	margin-top: 51px;
+	margin-bottom: 51px;
+}
+
+#flitres ul li {
+	box-sizing: border-box;
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
