@@ -6,6 +6,7 @@ function generateWorks(works) {
     for (let i = 0; i < works.length; i++) {
            
         const figureElement = document.createElement('figure');
+        figureElement.classList.add('category-' + works[i].category.id);
         const imageElement = document.createElement('img');
         imageElement.src = works[i].imageUrl;    
         const figcaptionElement = document.createElement('figcaption');
@@ -45,22 +46,30 @@ document.addEventListener("DOMContentLoaded", async function() {
     });
     
     // filtre objets
-    const categoriesIdObjets = works.filter(work => work.categoryId === 2 || work.categoryId === 3).map(work => work.id);
+    fetch("http://localhost:5678/api/works")
+        .then(response => response.json())
+        .then(categories => categories.map(category => ({id: category.category.id, name: category.category.name})));
     
-    const objetsFilter = document.createElement("li");
-    objetsFilter.textContent = "Objets";
+    function generateFilter(category) {
+        const categoryElement = document.createElement('li');
+        categoryElement.textContent = category.name;
 
-    allFilterElements.appendChild(objetsFilter);
+        categoryElement.addEventListener('click', () => {
+            const allWorkElements = Array.from(document.querySelectorAll('.gallery > figure'));
+                 // on masque préventivement chaque élement work
+            allWorkElements.forEach(workElement => {
+                if (workElement.classList.has('category-' + category.id)) {
+                    workElement.classList.remove('hidden');
+                } else {
+                    workElement.classList.add('hidden');
+                }
+            })
+            document.querySelector(".gallery").appendChild(categoryElement)
+        });
+    }
 
-    objetsFilter.addEventListener("click", function() {
-        const objetsElements = document.createElement('ul');
-        for (let i = 0 ; i < categoriesIdObjets.length ; i++) {
-            const objetElement = document.createElement('li');
-            objetElement.innerText = categoriesIdObjets[i];
-            objetsElements.appendChild(objetElement)
-        };
-        document.querySelector('.gallery').appendChild(objetsElements)
-     });
+
+    //
 
     // filtre appartements
     const categoriesIdAppartements = works.filter(work => work.categoryId === 1 || work.categoryId === 3).map(work => work.id);
