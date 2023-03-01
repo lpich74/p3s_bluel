@@ -135,12 +135,27 @@ li:hover {
 	justify-content: center;
 	margin-top: 51px;
 	margin-bottom: 51px;
+	gap: 10px;
 }
 
-#flitres ul li {
+#filtres li {
+	height: 37px;
 	box-sizing: border-box;
+	color: #1D6154;
 	border: 1px solid #1D6154;
 	border-radius: 60px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 0 20px;
+	font-weight: 700;
+	font-size: 16px;
+}
+
+#filtres li:visited,
+#filtres li:hover {
+	background-color: #1D6154;
+    color: #FFFFFF;
 }
 
 .gallery {

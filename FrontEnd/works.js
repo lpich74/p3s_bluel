@@ -45,68 +45,29 @@ document.addEventListener("DOMContentLoaded", async function() {
         };
     });
     
-    // filtre objets
-    fetch("http://localhost:5678/api/works")
-        .then(response => response.json())
-        .then(categories => categories.map(category => ({id: category.category.id, name: category.category.name})));
+    // filtres objets, appartements, hôtels et restaurants
     
-    function generateFilter(category) {
-        const categoryElement = document.createElement('li');
-        categoryElement.textContent = category.name;
+    const categories = await (await fetch("http://localhost:5678/api/categories")).json();
 
-        categoryElement.addEventListener('click', () => {
+    categories.forEach((category) => {
+        const filtresDiv = document.getElementById('filtres');
+        const categoryHtml = document.createElement('li');
+        categoryHtml.textContent = category.name;
+        filtresDiv.appendChild(categoryHtml); 
+
+        categoryHtml.addEventListener('click', () => {
             const allWorkElements = Array.from(document.querySelectorAll('.gallery > figure'));
                  // on masque préventivement chaque élement work
             allWorkElements.forEach(workElement => {
-                if (workElement.classList.has('category-' + category.id)) {
+                if (workElement.classList.contains('category-' + category.id)) {
                     workElement.classList.remove('hidden');
                 } else {
                     workElement.classList.add('hidden');
                 }
             })
-            document.querySelector(".gallery").appendChild(categoryElement)
         });
-    }
-
-
-    //
-
-    // filtre appartements
-    const categoriesIdAppartements = works.filter(work => work.categoryId === 1 || work.categoryId === 3).map(work => work.id);
-
-    const appartementsFilter = document.createElement("li");
-    appartementsFilter.textContent = "Appartements";
-
-    allFilterElements.appendChild(appartementsFilter);
+    });
     
-    appartementsFilter.addEventListener("click", function() {
-        const appartementsElements = document.createElement('ul');
-        for (let i = 0 ; i < categoriesIdAppartements.length ; i++) {
-            const appartementElement = document.createElement('li');
-            appartementElement.innerText = categoriesIdAppartements[i];
-            appartementsElements.appendChild(appartementElement)
-        };
-        document.querySelector('.gallery').appendChild(appartementsElements)
-     });
-    
-
-    // filtre hôtels et restaurants
-    const categoriesIdHotels = works.filter(work => work.categoryId === 1 || work.categoryId === 2).map(work => work.id);
-
-    const hotelsFilter = document.createElement("li")
-    hotelsFilter.textContent = "Hôtels et restaurants";
-
-    allFilterElements.appendChild(hotelsFilter);
-    
-    hotelsFilter.addEventListener("click", function() {
-        const hotelsElements = document.createElement('ul');
-        for (let i = 0 ; i < categoriesIdHotels.length ; i++) {
-            const hotelElement = document.createElement('li');
-            hotelElement.innerText = categoriesIdHotels[i];
-            hotelsElements.appendChild(hotelElement)
-        };
-        document.querySelector('.gallery').appendChild(hotelsElements)
-     });
 });
 
 
