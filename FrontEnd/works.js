@@ -50,10 +50,9 @@ document.addEventListener("DOMContentLoaded", async function() {
     const categories = await (await fetch("http://localhost:5678/api/categories")).json();
 
     categories.forEach((category) => {
-        const filtresDiv = document.getElementById('filtres');
         const categoryHtml = document.createElement('li');
         categoryHtml.textContent = category.name;
-        filtresDiv.appendChild(categoryHtml); 
+        allFilterElements.appendChild(categoryHtml); 
 
         categoryHtml.addEventListener('click', () => {
             const allWorkElements = Array.from(document.querySelectorAll('.gallery > figure'));
@@ -67,7 +66,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             })
         });
     });
-    
+
 });
 
 
