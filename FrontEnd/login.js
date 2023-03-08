@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const plainFormData = Object.fromEntries(formData.entries());
         const formDataJsonString = JSON.stringify(plainFormData);
 
+        
         const fetchOptions = {
             method: 'POST',
             headers: {
@@ -19,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const errorMessage = await response.text();
             throw new Error(errorMessage);
         }
+
         return response.json();
     };
     
@@ -31,8 +33,9 @@ document.addEventListener("DOMContentLoaded", function() {
         try {
             const formData = new FormData(form);
             const responseData = await postFormDataAsJson({ url, formData });
+            
+            window.localStorage.setItem("tokenResponse", JSON.stringify(responseData));
             window.location.href = "file:///Users/Lucas/Desktop/OpenClassrooms/Projet%203/Portfolio-architecte-sophie-bluel/FrontEnd/index.html";
-            console.log({ responseData });
         } catch(error) {
              window.alert("Erreur dans l’identifiant ou le mot de passe");
           }
@@ -40,6 +43,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const loginForm = document.getElementById("loginForm");
 
-    loginForm.addEventListener("submit", handleFormSubmit);
-
+    if (loginForm) {
+        loginForm.addEventListener("submit", handleFormSubmit);
+    }
+    
 });

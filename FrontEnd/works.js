@@ -18,7 +18,20 @@ function generateWorks(works) {
     }
 }
 
+function isConnected() {
+    return window.localStorage.getItem("tokenResponse") !== null;
+}
+
 document.addEventListener("DOMContentLoaded", async function() {
+
+    if (isConnected()) {
+        const connectionRequiredElements = Array.from(document.querySelectorAll('.connection-required'))
+        for (let i = 0; i < connectionRequiredElements.length; i++) {
+            connectionRequiredElements[i].classList.remove("hidden")
+        };
+        const allFilterElements = document.getElementById("filtres");
+            allFilterElements.classList.add("hidden");
+    }
 
     const response = await fetch("http://localhost:5678/api/works");
     const works = await response.json();

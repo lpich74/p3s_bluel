@@ -9,10 +9,18 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="https://kit.fontawesome.com/0fb51ee938.js" crossorigin="anonymous"></script>
 </head>
 <body>
+<section class="connection-required mode-edition hidden">
+	<i class="fa-regular fa-pen-to-square"></i>
+	<span>Mode édition</span>
+	<div id="publier">
+		<span>publier les changements</span>
+	</div>
+</section>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
@@ -26,6 +34,10 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<a class="connection-required hidden modifier" href="modal1">
+				<i class="fa-regular fa-pen-to-square"></i>
+				<span>modifier</span>
+			</a>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -34,8 +46,31 @@
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
 	</section>
+
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="projets">
+			<h2>Mes Projets</h2>
+			<a class="connection-required hidden modifier" href="modal1">
+				<i class="fa-regular fa-pen-to-square"></i>
+				<span>modifier</span>
+			</a>
+		</div>
+		
+		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" style="display: none;">
+			<div class="modal-wrapper">
+				<i class="fa-solid fa-x"></i>
+				<header>
+					<h3 id="titlemodal">Galerie photo</h3>
+				</header>
+				<section class="gallery-modal">
+				</section>
+				<section class="buttons-modal">
+					<button id="btn-add">Ajouter une photo</button>
+					<button id="btn-suppr">Supprimer la galerie</button>
+				</section>
+			</div>
+		</aside>
+
 		<ul id="filtres">
 		</ul>
 		<div class="gallery">
