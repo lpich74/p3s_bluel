@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         for (let i = 0; i < connectionRequiredElements.length; i++) {
             connectionRequiredElements[i].classList.remove("hidden")
         };
+
         const allFilterElements = document.getElementById("filtres");
             allFilterElements.classList.add("hidden");
     }

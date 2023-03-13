@@ -164,7 +164,7 @@ li:hover {
 	flex: 1
 }
 #introduction h2 {
-	margin-bottom: 1em;
+	margin: 1em 0;
 }
 
 #introduction p {
@@ -195,9 +195,9 @@ li:hover {
 	text-align: center;
 }
 
+.modifier:link,
 .modifier:hover,
-.modifier:visited, 
-.modifier:active {
+.modifier:visited {
 	text-decoration: none;
 }
 
@@ -326,6 +326,7 @@ footer nav ul {
 	top: 32px;
 	right: 36px;
 	font-size: 12px;
+	cursor: pointer;
 }
 
 .modal header {
@@ -342,9 +343,22 @@ footer nav ul {
 }
 
 .gallery-modal {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1%;
+	row-gap: 10px;
 	margin: 0 69px;
-	height: 200px;
+	padding-bottom: 47px;
 	border-bottom: 1px solid #B3B3B3;
+}
+
+.gallery-modal figure {
+	width: 19%;
+}
+
+.gallery-modal figure img {
+	height: 104px;
+	width: 100%;
 }
 
 .buttons-modal {
@@ -365,6 +379,7 @@ footer nav ul {
 	font-weight: 700;
 	font-size: 14px;
 	line-height: 17px;
+	cursor: pointer;
 }
 
 #btn-suppr {
@@ -376,5 +391,6 @@ footer nav ul {
 	font-weight: 400;
 	font-size: 14px;
 	line-height: 17px;
+	cursor: pointer;
 }
 

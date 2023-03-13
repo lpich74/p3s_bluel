@@ -32,17 +32,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
         try {
             const formData = new FormData(form);
-            const responseData = await postFormDataAsJson({ url, formData });
-            
+            const responseData = await postFormDataAsJson({ url, formData });    
             window.localStorage.setItem("tokenResponse", JSON.stringify(responseData));
             window.location.href = "file:///Users/Lucas/Desktop/OpenClassrooms/Projet%203/Portfolio-architecte-sophie-bluel/FrontEnd/index.html";
         } catch(error) {
-             window.alert("Erreur dans l’identifiant ou le mot de passe");
-          }
+            window.alert("Erreur dans l’identifiant ou le mot de passe");
+        }
     };
 
     const loginForm = document.getElementById("loginForm");
-
     if (loginForm) {
         loginForm.addEventListener("submit", handleFormSubmit);
     }
