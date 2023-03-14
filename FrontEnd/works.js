@@ -32,6 +32,12 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         const allFilterElements = document.getElementById("filtres");
             allFilterElements.classList.add("hidden");
+
+        const login = document.getElementById("login");
+            login.classList.add("hidden");
+
+        const logout = document.getElementById("logout");
+            logout.classList.remove("hidden");
     }
 
     const response = await fetch("http://localhost:5678/api/works");

@@ -83,6 +83,11 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	font-weight: 400;
+}
+
+#login-nav {
+	font-weight: 600;
 }
 
 li:hover {

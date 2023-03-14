@@ -14,13 +14,13 @@
 </head>
 
 <body>
-<section class="connection-required mode-edition hidden">
+<div class="connection-required mode-edition hidden">
 	<i class="fa-regular fa-pen-to-square"></i>
 	<span>Mode édition</span>
 	<div id="publier">
 		<span>publier les changements</span>
 	</div>
-</section>
+</div>
 
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
@@ -28,7 +28,8 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li><a href="login.html">login</a></li>
+			<li id="login"><a href="login.html">login</a></li>
+			<li id="logout" class="hidden">logout</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -70,12 +71,12 @@
 				<header>
 					<h3 id="titlemodal">Galerie photo</h3>
 				</header>
-				<section class="gallery-modal">
-				</section>
-				<section class="buttons-modal">
+				<div class="gallery-modal">
+				</div>
+				<div class="buttons-modal">
 					<button id="btn-add">Ajouter une photo</button>
 					<button id="btn-suppr">Supprimer la galerie</button>
-				</section>
+				</div>
 			</div>
 		</aside>
 

@@ -7,13 +7,16 @@ function generateModalWorks(works) {
            
         const figureElement = document.createElement('figure');
         const imageElement = document.createElement('img');
-        imageElement.src = works[i].imageUrl;    
+        imageElement.src = works[i].imageUrl; 
+        const iconElement = document.createElement('i');
+        iconElement.innerHTML = '<i class="fa-solid fa-arrows-up-down-left-right hidden"></i><i class="fa-regular fa-trash-can"></i>'
         const figcaptionElement = document.createElement('figcaption');
         figcaptionElement.innerText = "éditer";   
         
         gallery.appendChild(figureElement);            
-        figureElement.appendChild(imageElement)
+        figureElement.appendChild(imageElement);  
         figureElement.appendChild(figcaptionElement);
+        figureElement.appendChild(iconElement)
     }
 }
 
@@ -40,7 +43,22 @@ document.addEventListener("DOMContentLoaded", async function() {
         window.alert("Impossible de récupérer les travaux");
     }
 
-        // 4°)  a) fermer la modale en appuyant sur X
+        // 4°) Générer l'icône fléchée au survol de chaque figure 
+
+    const figure = Array.from(document.querySelectorAll(".gallery-modal figure"));
+    for (i = 0 ; i < figure.length ; i++) {
+        figure[i].addEventListener("mouseover", function() {
+            const addArrows = this.querySelector('.fa-solid');
+                addArrows.classList.remove('hidden')
+        });
+
+        figure[i].addEventListener("mouseout", function() {
+            const addArrows = this.querySelector('.fa-solid');
+                addArrows.classList.add('hidden')
+        });
+    }
+
+        // 5°)  a) fermer la modale en appuyant sur X
 
     const btnX = document.querySelector(".fa-solid.fa-x");
     const quitModal = document.querySelector('.modal');
@@ -57,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     });
 
-        // 5°) supprimer la galerie
+        // 6°) supprimer la galerie
 
     const supprGalerie = document.getElementById('btn-suppr');
 
@@ -66,5 +84,10 @@ document.addEventListener("DOMContentLoaded", async function() {
         for (let i = 0; i < galleryModalElements.length; i++) {
             galleryModalElements[i].classList.add("hidden")
         };
+        const galleryElements = Array.from(document.querySelectorAll('.gallery > figure'));
+        for (let i = 0; i < galleryElements.length; i++) {
+            galleryElements[i].classList.add("hidden")
+        };
     });
+
 });

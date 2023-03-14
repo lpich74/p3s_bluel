@@ -124,24 +124,29 @@ h2{
 	font-size: 30px;
 	color: #1D6154
 }
+
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
 
 }
+
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
 
-li:hover {
+li:hover,
+li a:hover {
 	color: #B1663C;
 }
+
 #introduction {
 	display: flex;
 	align-items: center;
 }
+
 #introduction figure {
 	flex: 1;
 	display: flex;
@@ -353,12 +358,37 @@ footer nav ul {
 }
 
 .gallery-modal figure {
+	position: relative;
 	width: 19%;
 }
 
 .gallery-modal figure img {
 	height: 104px;
 	width: 100%;
+}
+
+.gallery-modal .fa-regular {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	color: #FFFFFF;
+	background-color: #000000;
+	font-size: 9px;
+	padding: 3px;
+	border: 1px solid black;
+	border-radius: 2px;
+}
+
+.gallery-modal .fa-solid {
+	position: absolute;
+	top: 6px;
+	right: 26px;
+	color: #FFFFFF;
+	background-color: #000000;
+	font-size: 9px;
+	padding: 3px;
+	border: 1px solid black;
+	border-radius: 2px;
 }
 
 .buttons-modal {
