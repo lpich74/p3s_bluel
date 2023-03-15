@@ -1,4 +1,4 @@
-        // 1°) Fonction qui va générer la galerie de photos à éditer dans la modale
+        // 1°)  a) Fonction qui va générer la galerie de photos à éditer dans la modale
 
 function generateModalWorks(works) {
 
@@ -6,6 +6,8 @@ function generateModalWorks(works) {
     for (let i = 0; i < works.length; i++) {
            
         const figureElement = document.createElement('figure');
+        figureElement.classList.add('id-' + works[i].id);
+        figureElement.setAttribute("data-id", works[i].id)
         const imageElement = document.createElement('img');
         imageElement.src = works[i].imageUrl; 
         const iconElement = document.createElement('i');
@@ -19,6 +21,35 @@ function generateModalWorks(works) {
         figureElement.appendChild(iconElement)
     }
 }
+        //  b) Fonctions qui servent à jongler entre les modales
+
+function hideModeAjout() {
+    const elementsAjout = Array.from(document.querySelectorAll(".mode-ajout"));
+    for (i = 0 ; i < elementsAjout.length ; i++) {
+        elementsAjout[i].classList.add("hidden");
+    };    
+}
+
+function hideModePresentation() {
+    const elementsPresentation = Array.from(document.querySelectorAll(".mode-presentation"));
+    for (i = 0 ; i < elementsPresentation.length ; i++) {
+        elementsPresentation[i].classList.add("hidden");
+    };    
+}
+
+function showModeAjout() {
+    const elementsAjout = Array.from(document.querySelectorAll(".mode-ajout"));
+    for (i = 0 ; i < elementsAjout.length ; i++) {
+        elementsAjout[i].classList.remove("hidden");
+    };    
+}
+
+function showModePresentation() {
+    const elementsPresentation = Array.from(document.querySelectorAll(".mode-presentation"));
+    for (i = 0 ; i < elementsPresentation.length ; i++) {
+        elementsPresentation[i].classList.remove("hidden");
+    };    
+}
 
 document.addEventListener("DOMContentLoaded", async function() {
 
@@ -30,6 +61,8 @@ document.addEventListener("DOMContentLoaded", async function() {
         button.addEventListener("click", function() {
             const showModal = document.querySelector('.modal');
             showModal.classList.remove("hidden");
+            showModePresentation()
+            hideModeAjout()
         })
     });
 
@@ -39,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         const response = await fetch("http://localhost:5678/api/works");
         const works = await response.json();
         generateModalWorks(works)
-    } catch (error) {
+    } catch(error) {
         window.alert("Impossible de récupérer les travaux");
     }
 
@@ -75,7 +108,38 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     });
 
-        // 6°) supprimer la galerie
+        // 6°) supprimer un élément la galerie
+    
+    const supprElementGalerie = Array.from(document.querySelectorAll(".gallery-modal figure .fa-regular"));
+    for (i = 0 ; i < supprElementGalerie.length ; i++) {
+        supprElementGalerie[i].addEventListener("click", async function() {
+            const figure = this.parentElement.parentElement;
+            const id = figure.getAttribute("data-id");
+
+            const tokenResponse = JSON.parse(localStorage.getItem("tokenResponse")).token;
+            const deleteOptions = {
+                method: 'DELETE',
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": `Bearer ${tokenResponse}`
+                }
+            };
+
+            try {
+                const response = await fetch(`http://localhost:5678/api/works/${id}`, deleteOptions);
+
+                if (!response.ok) {
+                    throw new Error("Impossible d'effacer ce projet");
+                }
+                figure.remove();
+
+            } catch(error) {
+                window.alert("Opération impossible")
+            }
+        });
+    }
+  
+        // 7°) supprimer la galerie entière
 
     const supprGalerie = document.getElementById('btn-suppr');
 
@@ -88,6 +152,24 @@ document.addEventListener("DOMContentLoaded", async function() {
         for (let i = 0; i < galleryElements.length; i++) {
             galleryElements[i].classList.add("hidden")
         };
+    });
+
+        // 8°)  a) apparition de la modale-formulaire en cliquant sur "ajouter une photo"
+    
+    const ajouterPhoto = document.getElementById('btn-add');
+
+    ajouterPhoto.addEventListener("click", function() {
+        hideModePresentation();
+        showModeAjout()
+    });
+
+            //  b) retour en arrière
+    
+    const btnArrow = document.querySelector(".fa-solid.fa-arrow-left");
+
+    btnArrow.addEventListener("click", function() {
+        hideModeAjout();
+        showModePresentation()
     });
 
 });

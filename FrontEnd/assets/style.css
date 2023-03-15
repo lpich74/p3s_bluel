@@ -326,7 +326,7 @@ footer nav ul {
 	overflow: auto;
 }
 
-.modal-wrapper > .fa-solid {
+.modal-wrapper > .fa-solid.fa-x {
 	position: absolute;
 	top: 32px;
 	right: 36px;
@@ -334,11 +334,19 @@ footer nav ul {
 	cursor: pointer;
 }
 
+.modal-wrapper > .fa-solid.fa-arrow-left {
+	position: absolute;
+	top: 32px;
+	left: 36px;
+	font-size: 15px;
+	cursor: pointer;
+}
+
 .modal header {
 	display: unset;
 }
 
-#titlemodal {
+.title-modal {
 	text-align: center;
 	font-weight: 400;
 	font-size: 26px;
@@ -377,6 +385,7 @@ footer nav ul {
 	padding: 3px;
 	border: 1px solid black;
 	border-radius: 2px;
+	cursor: pointer;
 }
 
 .gallery-modal .fa-solid {
@@ -389,6 +398,7 @@ footer nav ul {
 	padding: 3px;
 	border: 1px solid black;
 	border-radius: 2px;
+	cursor: pointer;
 }
 
 .buttons-modal {
@@ -419,6 +429,72 @@ footer nav ul {
 	font-family: 'Syne';
 	font-style: normal;
 	font-weight: 400;
+	font-size: 14px;
+	line-height: 17px;
+	cursor: pointer;
+}
+
+#ajoutPhotoForm {
+	text-align: left;
+	display: flex;
+	flex-direction: column;
+	margin: 0 69px;
+}
+
+#ajoutPhotoForm label {
+	margin-top: 21px;
+	margin-bottom: 10px;
+}
+
+#ajoutPhotoForm input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	padding-left: 16px;
+	padding-right: 21px;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;	
+}
+
+#ajoutPhotoForm input[type="file"] {
+	background-color: #E8F1F7;
+	border-radius: 3px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#ajoutPhotoForm select {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	margin-bottom: 47px;
+	padding-left: 16px;
+	padding-right: 21px;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;	
+}
+
+#ajoutPhotoForm input[type="submit"] {
+	margin-top: 32px;
+	margin-bottom: 0;
+	background-color: #A7A7A7;
+	padding: 10px 49px;
+	color: #FFFFFF;
+	border: 1px solid #A7A7A7;
+	border-radius: 60px;
+	font-family: 'Syne';
+	font-style: normal;
+	font-weight: 700;
 	font-size: 14px;
 	line-height: 17px;
 	cursor: pointer;

@@ -65,20 +65,35 @@
 			</a>
 		</div>
 		
-		<aside id="modal1" class="modal hidden" aria-hidden="true" role="dialog" aria-labelledby="titlemodal">
+		<div id="modal1" class="modal hidden" aria-hidden="true" role="dialog" aria-labelledby="titlemodal1">
 			<div class="modal-wrapper">
+				<i class="fa-solid fa-arrow-left mode-ajout"></i>
 				<i class="fa-solid fa-x"></i>
 				<header>
-					<h3 id="titlemodal">Galerie photo</h3>
+					<h3 id="titlemodal1" class="title-modal mode-presentation">Galerie photo</h3>
+					<h3 id="titlemodal2" class="title-modal mode-ajout">Ajouter photo</h3>
 				</header>
-				<div class="gallery-modal">
+				<div class="gallery-modal mode-presentation">
 				</div>
+				<form id="ajoutPhotoForm" class="mode-ajout" action="" method="post">
+					<label for="iamge"></label>
+					<input type="file" name="image" id="image">
+					<label for="title">Titre</label>
+					<input type="text" name="title" id="title">
+					<label for="category-project">Catégorie</label>
+					<select name="category-project" id="category-project">
+						<option value="objet">Objet</option>
+						<option value="appartement">Appartement</option>
+						<option value="bar-et-restaurant">Bar et restaurant</option>
+					</select>
+					<input id="validerButton" type="submit" value="Valider">
+				</form>
 				<div class="buttons-modal">
-					<button id="btn-add">Ajouter une photo</button>
-					<button id="btn-suppr">Supprimer la galerie</button>
+					<button class="mode-presentation" id="btn-add">Ajouter une photo</button>
+					<button class="mode-presentation" id="btn-suppr">Supprimer la galerie</button>
 				</div>
 			</div>
-		</aside>
+		</div>
 
 		<ul id="filtres">
 		</ul>
