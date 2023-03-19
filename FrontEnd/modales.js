@@ -51,6 +51,20 @@ function showModePresentation() {
     };    
 }
 
+        //  c) Fonction de suppression des élements grâce à l'API
+
+function deleteData(url, tokenKey) {
+    const tokenResponse = JSON.parse(localStorage.getItem(tokenKey)).token;
+    const deleteOptions = {
+            method: 'DELETE',
+            headers: {
+            "Accept": "*/*",
+            "Authorization": `Bearer ${tokenResponse}`
+            }
+        };
+    return fetch(url, deleteOptions);
+}
+
 document.addEventListener("DOMContentLoaded", async function() {
 
         // 2°) Ouverture de la modale en appuyant sur "modifier"
@@ -108,7 +122,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     });
 
-        // 6°) supprimer un élément la galerie
+        // 6°)  a) supprimer un élément la galerie
     
     const supprElementGalerie = Array.from(document.querySelectorAll(".gallery-modal figure .fa-regular"));
     for (i = 0 ; i < supprElementGalerie.length ; i++) {
@@ -116,17 +130,8 @@ document.addEventListener("DOMContentLoaded", async function() {
             const figure = this.parentElement.parentElement;
             const id = figure.getAttribute("data-id");
 
-            const tokenResponse = JSON.parse(localStorage.getItem("tokenResponse")).token;
-            const deleteOptions = {
-                method: 'DELETE',
-                headers: {
-                    "Accept": "*/*",
-                    "Authorization": `Bearer ${tokenResponse}`
-                }
-            };
-
             try {
-                const response = await fetch(`http://localhost:5678/api/works/${id}`, deleteOptions);
+                const response = await deleteData(`http://localhost:5678/api/works/${id}`, "tokenResponse")
 
                 if (!response.ok) {
                     throw new Error("Impossible d'effacer ce projet");
@@ -136,23 +141,56 @@ document.addEventListener("DOMContentLoaded", async function() {
             } catch(error) {
                 window.alert("Opération impossible")
             }
+
+        const backgroundFigure = Array.from(document.querySelectorAll('.gallery figure'));
+            for (let i = 0; i < backgroundFigure.length; i++) {
+                const backgroundFigureId = backgroundFigure[i].getAttribute("data-id");
+                if (backgroundFigureId === id) {
+                    try {
+                        const response = await deleteData(`http://localhost:5678/api/works/${id}`, "tokenResponse")
+
+                        if (!response.ok) {
+                            throw new Error("Impossible d'effacer ce projet");
+                        }
+                        backgroundFigure[i].remove();
+
+                    } catch(error) {
+                        window.alert("Opération impossible")
+                    }
+                } 
+            }
         });
     }
   
-        // 7°) supprimer la galerie entière
+        //      b) supprimer la galerie entière
 
-    const supprGalerie = document.getElementById('btn-suppr');
+    const supprGalerieEntiere = document.getElementById('btn-suppr');
 
-    supprGalerie.addEventListener("click", function() {
-        const galleryModalElements = Array.from(document.querySelector('.gallery-modal').querySelectorAll('figure'));
-        for (let i = 0; i < galleryModalElements.length; i++) {
-            galleryModalElements[i].classList.add("hidden")
-        };
-        const galleryElements = Array.from(document.querySelectorAll('.gallery > figure'));
-        for (let i = 0; i < galleryElements.length; i++) {
-            galleryElements[i].classList.add("hidden")
-        };
-    });
+    supprGalerieEntiere.addEventListener("click", async function() { 
+        const galerie = document.querySelector('.gallery-modal');
+        const figures = galerie.querySelectorAll('figure');
+
+        const backgroundGallery = document.querySelector('.gallery');
+        const backgroundFigures = backgroundGallery.querySelectorAll('figure');
+
+        const allFigures = [...figures, ...backgroundFigures];
+
+        for (let i = 0; i < allFigures.length; i++) {
+          const id = allFigures[i].getAttribute("data-id");
+
+          try {
+            const response = await deleteData(`http://localhost:5678/api/works/${id}`, "tokenResponse")
+      
+            if (!response.ok) {
+              throw new Error("Impossible d'effacer la galerie");
+            }
+            allFigures[i].remove();
+      
+          } catch(error) {
+            window.alert("Opération impossible");
+          }
+        }
+    })
 
         // 8°)  a) apparition de la modale-formulaire en cliquant sur "ajouter une photo"
     

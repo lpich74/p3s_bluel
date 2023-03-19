@@ -76,19 +76,25 @@
 				<div class="gallery-modal mode-presentation">
 				</div>
 				<form id="ajoutPhotoForm" class="mode-ajout" action="" method="post">
-					<label for="iamge"></label>
-					<input type="file" name="image" id="image">
+					<label for="image" class="image-custom">
+						<i class="fa-regular fa-image"></i>
+						<button id="image" class="btn-photo">+ Ajouter photo</button>
+						<span>jpg, png : 4mo max</span>
+					</label>
+					<input type="file" name="image">
 					<label for="title">Titre</label>
 					<input type="text" name="title" id="title">
 					<label for="category-project">Catégorie</label>
 					<select name="category-project" id="category-project">
 						<option value="objet">Objet</option>
 						<option value="appartement">Appartement</option>
-						<option value="bar-et-restaurant">Bar et restaurant</option>
+						<option value="bar-et-restaurant">Bar & Restaurant</option>
 					</select>
-					<input id="validerButton" type="submit" value="Valider">
+					<div class="div-validerButton">
+						<input id="validerButton" type="submit" value="Valider">
+					</div>
 				</form>
-				<div class="buttons-modal">
+				<div class="buttons-modal mode-presentation">
 					<button class="mode-presentation" id="btn-add">Ajouter une photo</button>
 					<button class="mode-presentation" id="btn-suppr">Supprimer la galerie</button>
 				</div>

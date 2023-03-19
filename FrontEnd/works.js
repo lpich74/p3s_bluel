@@ -7,6 +7,7 @@ function generateWorks(works) {
            
         const figureElement = document.createElement('figure');
         figureElement.classList.add('category-' + works[i].category.id);
+        figureElement.setAttribute("data-id", works[i].id)
         const imageElement = document.createElement('img');
         imageElement.src = works[i].imageUrl;    
         const figcaptionElement = document.createElement('figcaption');
