@@ -75,13 +75,13 @@
 				</header>
 				<div class="gallery-modal mode-presentation">
 				</div>
-				<form id="ajoutPhotoForm" class="mode-ajout" action="" method="post">
+				<form id="ajoutPhotoForm" class="mode-ajout" action="" method="post" enctype="multipart/form-data">
 					<label for="image" class="image-custom">
-						<i class="fa-regular fa-image"></i>
-						<button id="image" class="btn-photo">+ Ajouter photo</button>
-						<span>jpg, png : 4mo max</span>
+							<i class="fa-regular fa-image image-custom-element"></i>
+							<span class="btn-photo image-custom-element">+ Ajouter photo</span>
+							<span class="image-custom-element">jpg, png : 4mo max</span>
 					</label>
-					<input type="file" name="image">
+					<input type="file" name="image" id="image" accept=".png, .jpg, .jpeg" class="hidden">
 					<label for="title">Titre</label>
 					<input type="text" name="title" id="title">
 					<label for="category-project">Catégorie</label>
@@ -91,7 +91,7 @@
 						<option value="bar-et-restaurant">Bar & Restaurant</option>
 					</select>
 					<div class="div-validerButton">
-						<input id="validerButton" type="submit" value="Valider">
+						<input class="validerButton" type="submit" value="Valider">
 					</div>
 				</form>
 				<div class="buttons-modal mode-presentation">
@@ -135,3 +135,4 @@
 <script src="modales.js"></script>
 </body>
 </html>
+
