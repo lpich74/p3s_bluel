@@ -22,7 +22,7 @@ function generateModalWorks(works) {
     }
 }
 
-        //  b) Fonctions qui servent à jongler entre les modales
+        //  b) Fonctions qui servent à jongler entre les 2 parties de la modale
 
 function hideModeAjout() {
     const elementsAjout = Array.from(document.querySelectorAll(".mode-ajout"));
@@ -52,7 +52,24 @@ function showModePresentation() {
     };    
 }
 
-        //  c) Fonction de suppression des élements grâce à l'API
+        //  c) Fonction qui va générer l'icône fléchée au survol de chaque figure 
+
+function addArrowsToGalleryModal() {
+    const figure = Array.from(document.querySelectorAll(".gallery-modal figure"));
+    for (i = 0 ; i < figure.length ; i++) {
+        figure[i].addEventListener("mouseover", function() {
+            const addArrows = this.querySelector('.fa-solid');
+                addArrows.classList.remove('hidden')
+        });
+
+        figure[i].addEventListener("mouseout", function() {
+            const addArrows = this.querySelector('.fa-solid');
+                addArrows.classList.add('hidden')
+        });
+    }
+}
+
+        //  d) Fonction de suppression des élements grâce à l'API
 
 function deleteData(url, tokenKey) {
     const tokenResponse = JSON.parse(localStorage.getItem(tokenKey)).token;
@@ -66,7 +83,48 @@ function deleteData(url, tokenKey) {
     return fetch(url, deleteOptions);
 }
 
-        //  d) Fonction d'import d'une nouvelle photo
+        //  e) Fonction qui va supprimer un seul élément la galerie
+    
+function deleteElementFromGallery() {
+    const supprElementGalerie = Array.from(document.querySelectorAll(".gallery-modal figure .fa-regular"));
+    for (i = 0 ; i < supprElementGalerie.length ; i++) {
+        supprElementGalerie[i].addEventListener("click", async function() {
+            const figure = this.parentElement.parentElement;
+            const id = figure.getAttribute("data-id");
+    
+            try {
+                const response = await deleteData(`http://localhost:5678/api/works/${id}`, "tokenResponse")
+    
+                if (!response.ok) {
+                    throw new Error("Impossible d'effacer ce projet");
+                }
+                figure.remove();
+    
+                const backgroundFigure = Array.from(document.querySelectorAll('.gallery figure'));
+                    for (let i = 0; i < backgroundFigure.length; i++) {
+                        const backgroundFigureId = backgroundFigure[i].getAttribute("data-id");
+                        if (backgroundFigureId === id) {
+                            try {
+                                const response = await deleteData(`http://localhost:5678/api/works/${id}`, "tokenResponse")
+    
+                                if (!response.ok) {
+                                 throw new Error("Impossible d'effacer ce projet");
+                            }
+                            backgroundFigure[i].remove();
+    
+                            } catch(error) {
+                                window.alert("Opération impossible")
+                            }
+                        } 
+                    }
+            } catch(error) {
+                window.alert("Opération impossible")
+            }
+        });
+    }
+}
+
+        //  f) Fonction d'import d'une nouvelle photo
 
 function importNewPhoto() {
     const editNewPhoto = document.querySelector('.image-custom');
@@ -90,7 +148,7 @@ function importNewPhoto() {
     reader.readAsDataURL(file)
 }
 
-        //  e) Fonction d'ajout d'un nouveau projet
+        //  g) Fonction d'ajout d'un nouveau projet
 
 function addData(url, formData, tokenKey) {
     const tokenResponse = JSON.parse(localStorage.getItem(tokenKey)).token;
@@ -133,18 +191,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         // 4°) Générer l'icône fléchée au survol de chaque figure 
 
-    const figure = Array.from(document.querySelectorAll(".gallery-modal figure"));
-    for (i = 0 ; i < figure.length ; i++) {
-        figure[i].addEventListener("mouseover", function() {
-            const addArrows = this.querySelector('.fa-solid');
-                addArrows.classList.remove('hidden')
-        });
-
-        figure[i].addEventListener("mouseout", function() {
-            const addArrows = this.querySelector('.fa-solid');
-                addArrows.classList.add('hidden')
-        });
-    }
+    addArrowsToGalleryModal()
 
         // 5°)  a) fermer la modale en appuyant sur X
 
@@ -165,43 +212,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         // 6°)  a) supprimer un élément la galerie
     
-    const supprElementGalerie = Array.from(document.querySelectorAll(".gallery-modal figure .fa-regular"));
-    for (i = 0 ; i < supprElementGalerie.length ; i++) {
-        supprElementGalerie[i].addEventListener("click", async function() {
-            const figure = this.parentElement.parentElement;
-            const id = figure.getAttribute("data-id");
-
-            try {
-                const response = await deleteData(`http://localhost:5678/api/works/${id}`, "tokenResponse")
-
-                if (!response.ok) {
-                    throw new Error("Impossible d'effacer ce projet");
-                }
-                figure.remove();
-
-            } catch(error) {
-                window.alert("Opération impossible")
-            }
-
-        const backgroundFigure = Array.from(document.querySelectorAll('.gallery figure'));
-            for (let i = 0; i < backgroundFigure.length; i++) {
-                const backgroundFigureId = backgroundFigure[i].getAttribute("data-id");
-                if (backgroundFigureId === id) {
-                    try {
-                        const response = await deleteData(`http://localhost:5678/api/works/${id}`, "tokenResponse")
-
-                        if (!response.ok) {
-                            throw new Error("Impossible d'effacer ce projet");
-                        }
-                        backgroundFigure[i].remove();
-
-                    } catch(error) {
-                        window.alert("Opération impossible")
-                    }
-                } 
-            }
-        });
-    }
+    deleteElementFromGallery()
   
         //      b) supprimer la galerie entière
 
@@ -251,7 +262,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         showModePresentation()
     });
 
-        // 9°) importer une photo
+        // 9°) Importer une photo
     
     const imageCustom = document.querySelector('.image-custom');
     const btnPhoto = document.querySelector('.btn-photo');
@@ -306,6 +317,45 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         // 11°) Ajouter un nouveau projet grâce à l'API
 
+    async function fetchNewWorks() {
+        const response = await fetch("http://localhost:5678/api/works");
+        const works = await response.json();
+
+        const lastWork = works[works.length - 1];
+
+            const gallery = document.querySelector('.gallery');
+            const figureElement = document.createElement('figure');
+            figureElement.classList.add('category-' + lastWork.category.id);
+            figureElement.setAttribute("data-id", lastWork.id)
+            const imageElement = document.createElement('img');
+            imageElement.src = lastWork.imageUrl;    
+            const figcaptionElement = document.createElement('figcaption');
+            figcaptionElement.innerText = lastWork.title;   
+            
+            gallery.appendChild(figureElement);            
+            figureElement.appendChild(imageElement)
+            figureElement.appendChild(figcaptionElement);
+
+            const galleryModal = document.querySelector('.gallery-modal');
+            const figureElementModal = document.createElement('figure');
+            figureElementModal.classList.add('id-' + lastWork.id);
+            figureElementModal.setAttribute("data-id", lastWork.id)
+            const imageElementModal = document.createElement('img');
+            imageElementModal.src = lastWork.imageUrl; 
+            const iconElement = document.createElement('i');
+            iconElement.innerHTML = '<i class="fa-solid fa-arrows-up-down-left-right hidden"></i><i class="fa-regular fa-trash-can"></i>'
+            const figcaptionElementModal = document.createElement('figcaption');
+            figcaptionElementModal.innerText = "éditer";   
+            
+            galleryModal.appendChild(figureElementModal);            
+            figureElementModal.appendChild(imageElementModal);  
+            figureElementModal.appendChild(figcaptionElementModal);
+            figureElementModal.appendChild(iconElement)
+        
+        addArrowsToGalleryModal();
+        deleteElementFromGallery();
+    }    
+
     newWorkForm.addEventListener('submit', async (event) => {   
         event.preventDefault();
         
@@ -318,7 +368,9 @@ document.addEventListener("DOMContentLoaded", async function() {
         if (!response.ok) {
             window.alert("Erreur lors de l'ajout du projet");
         } else {
+            fetchNewWorks()
             window.alert("Projet ajouté avec succès !");
+            quitModal.classList.add("hidden")
         }
     });
 

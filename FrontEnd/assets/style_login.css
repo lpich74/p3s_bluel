@@ -123,6 +123,13 @@ li:hover {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+#email,
+#password {
+	padding-left: 20px;
+	font-family: 'Work Sans';
+	font-style: normal;
+}
+
 #login label {
 	margin: 2em 0 7px 0;
 }
