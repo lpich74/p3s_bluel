@@ -34,7 +34,9 @@ document.addEventListener("DOMContentLoaded", function() {
             const formData = new FormData(form);
             const responseData = await postFormDataAsJson({ url, formData });    
             window.localStorage.setItem("tokenResponse", JSON.stringify(responseData));
-            window.location.href = "file:///Users/Lucas/Desktop/OpenClassrooms/Projet%203/Portfolio-architecte-sophie-bluel/FrontEnd/index.html";
+            const newPath = window.location.href.replace("/login.html", "/index.html");
+            window.location.href = newPath;    
+                  
         } catch(error) {
             window.alert("Erreur dans l’identifiant ou le mot de passe");
         }

@@ -138,8 +138,18 @@ nav li {
 }
 
 li:hover,
-li a:hover {
+#login a:hover {
 	color: #B1663C;
+}
+
+#login a {
+	text-decoration: none;
+	color: #000000;
+}
+
+#log {
+	color: #000000;
+	font-weight: 600;
 }
 
 #introduction {
@@ -247,9 +257,15 @@ li a:hover {
 	grid-row-gap: 20px;
 }
 
-.gallery img {
-	width: 100%;
+.gallery figure {
+	display: flex;
+	flex-direction: column;
+}
 
+.gallery img {
+	flex-grow: 1;
+	width: 100%;
+	object-fit: cover;
 }
 
 #contact {
@@ -367,13 +383,17 @@ footer nav ul {
 
 .gallery-modal figure {
 	position: relative;
+	display: flex;
+	flex-direction: column;
 	width: 18%;
 }
 
 .gallery-modal figure img {
-	height: 104px;
+	flex-grow: 1;
 	width: 100%;
+	object-fit: cover;
 }
+
 .gallery-modal figure figcaption {
 	margin-top: 2px;
 }
@@ -547,5 +567,3 @@ footer nav ul {
 	line-height: 17px;
 	cursor: pointer;
 }
-
-

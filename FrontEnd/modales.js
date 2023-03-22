@@ -26,28 +26,28 @@ function generateModalWorks(works) {
 
 function hideModeAjout() {
     const elementsAjout = Array.from(document.querySelectorAll(".mode-ajout"));
-    for (i = 0 ; i < elementsAjout.length ; i++) {
+    for (let i = 0 ; i < elementsAjout.length ; i++) {
         elementsAjout[i].classList.add("hidden");
     };    
 }
 
 function hideModePresentation() {
     const elementsPresentation = Array.from(document.querySelectorAll(".mode-presentation"));
-    for (i = 0 ; i < elementsPresentation.length ; i++) {
+    for (let i = 0 ; i < elementsPresentation.length ; i++) {
         elementsPresentation[i].classList.add("hidden");
     };    
 }
 
 function showModeAjout() {
     const elementsAjout = Array.from(document.querySelectorAll(".mode-ajout"));
-    for (i = 0 ; i < elementsAjout.length ; i++) {
+    for (let i = 0 ; i < elementsAjout.length ; i++) {
         elementsAjout[i].classList.remove("hidden");
     };    
 }
 
 function showModePresentation() {
     const elementsPresentation = Array.from(document.querySelectorAll(".mode-presentation"));
-    for (i = 0 ; i < elementsPresentation.length ; i++) {
+    for (let i = 0 ; i < elementsPresentation.length ; i++) {
         elementsPresentation[i].classList.remove("hidden");
     };    
 }
@@ -56,7 +56,7 @@ function showModePresentation() {
 
 function addArrowsToGalleryModal() {
     const figure = Array.from(document.querySelectorAll(".gallery-modal figure"));
-    for (i = 0 ; i < figure.length ; i++) {
+    for (let i = 0 ; i < figure.length ; i++) {
         figure[i].addEventListener("mouseover", function() {
             const addArrows = this.querySelector('.fa-solid');
                 addArrows.classList.remove('hidden')
@@ -87,7 +87,7 @@ function deleteData(url, tokenKey) {
     
 function deleteElementFromGallery() {
     const supprElementGalerie = Array.from(document.querySelectorAll(".gallery-modal figure .fa-regular"));
-    for (i = 0 ; i < supprElementGalerie.length ; i++) {
+    for (let i = 0 ; i < supprElementGalerie.length ; i++) {
         supprElementGalerie[i].addEventListener("click", async function() {
             const figure = this.parentElement.parentElement;
             const id = figure.getAttribute("data-id");
@@ -163,6 +163,21 @@ function addData(url, formData, tokenKey) {
     return fetch(url, addOptions);
 }
 
+        //  h) Fonction de rechargement du label-image
+
+function resetImage() {
+    const removeImages = document.querySelectorAll(".image-custom img");
+    const reloadCustomElements = document.querySelectorAll('.image-custom-element');
+  
+    removeImages.forEach(image => {
+      image.classList.add("hidden");
+    });
+  
+    reloadCustomElements.forEach(customElement => {
+      customElement.classList.remove("hidden");
+    });
+}
+
 
 document.addEventListener("DOMContentLoaded", async function() {
 
@@ -191,7 +206,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         // 4°) Générer l'icône fléchée au survol de chaque figure 
 
-    addArrowsToGalleryModal()
+    addArrowsToGalleryModal();
 
         // 5°)  a) fermer la modale en appuyant sur X
 
@@ -212,18 +227,15 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         // 6°)  a) supprimer un élément la galerie
     
-    deleteElementFromGallery()
+    deleteElementFromGallery();
   
         //      b) supprimer la galerie entière
 
     const supprGalerieEntiere = document.getElementById('btn-suppr');
 
     supprGalerieEntiere.addEventListener("click", async function() { 
-        const galerie = document.querySelector('.gallery-modal');
-        const figures = galerie.querySelectorAll('figure');
-
-        const backgroundGallery = document.querySelector('.gallery');
-        const backgroundFigures = backgroundGallery.querySelectorAll('figure');
+        const figures = document.querySelectorAll('.gallery-modal figure');
+        const backgroundFigures = document.querySelectorAll('.gallery figure');
 
         const allFigures = [...figures, ...backgroundFigures];
 
@@ -278,7 +290,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     inputFile.addEventListener('change', function() {
         const imageCustomElement = Array.from(document.querySelectorAll('.image-custom-element'));
-        for (i = 0 ; i < imageCustomElement.length ; i++) {
+        for (let i = 0 ; i < imageCustomElement.length ; i++) {
             imageCustomElement[i].classList.add("hidden");
         };
         importNewPhoto();
@@ -350,7 +362,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             galleryModal.appendChild(figureElementModal);            
             figureElementModal.appendChild(imageElementModal);  
             figureElementModal.appendChild(figcaptionElementModal);
-            figureElementModal.appendChild(iconElement)
+            figureElementModal.appendChild(iconElement);
         
         addArrowsToGalleryModal();
         deleteElementFromGallery();
@@ -368,9 +380,12 @@ document.addEventListener("DOMContentLoaded", async function() {
         if (!response.ok) {
             window.alert("Erreur lors de l'ajout du projet");
         } else {
-            fetchNewWorks()
+            fetchNewWorks();
             window.alert("Projet ajouté avec succès !");
-            quitModal.classList.add("hidden")
+            quitModal.classList.add('hidden');
+            newWorkForm.reset();
+            formIsComplete();
+            resetImage();
         }
     });
 
