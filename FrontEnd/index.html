@@ -75,7 +75,7 @@
 				</header>
 				<div class="gallery-modal mode-presentation">
 				</div>
-				<form id="ajoutPhotoForm" class="mode-ajout" action="" method="post" enctype="multipart/form-data">
+				<form id="ajoutPhotoForm" class="mode-ajout" action="http://localhost:5678/api/works" method="post" enctype="multipart/form-data">
 					<label for="image" class="image-custom">
 							<i class="fa-regular fa-image image-custom-element"></i>
 							<span class="btn-photo image-custom-element">+ Ajouter photo</span>
@@ -85,10 +85,10 @@
 					<label for="title">Titre</label>
 					<input type="text" name="title" id="title">
 					<label for="category-project">Catégorie</label>
-					<select name="category-project" id="category-project">
-						<option value="objet">Objet</option>
-						<option value="appartement">Appartement</option>
-						<option value="bar-et-restaurant">Bar & Restaurant</option>
+					<select name="category" id="category-project">
+						<option value="1">Objet</option>
+						<option value="2">Appartement</option>
+						<option value="3">Bar & Restaurant</option>
 					</select>
 					<div class="div-validerButton">
 						<input class="validerButton" type="submit" value="Valider">

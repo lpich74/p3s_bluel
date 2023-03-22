@@ -21,6 +21,7 @@ function generateModalWorks(works) {
         figureElement.appendChild(iconElement)
     }
 }
+
         //  b) Fonctions qui servent à jongler entre les modales
 
 function hideModeAjout() {
@@ -87,6 +88,21 @@ function importNewPhoto() {
     }
 
     reader.readAsDataURL(file)
+}
+
+        //  e) Fonction d'ajout d'un nouveau projet
+
+function addData(url, formData, tokenKey) {
+    const tokenResponse = JSON.parse(localStorage.getItem(tokenKey)).token;
+    const addOptions = {
+            method: 'POST',
+            headers: {
+            "Accept": "application/json",
+            "Authorization": `Bearer ${tokenResponse}`
+            },
+            body: formData
+        };
+    return fetch(url, addOptions);
 }
 
 
@@ -259,12 +275,12 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         // 10°) Vérifier si le formulaire est complet avant de valider
 
-    const form = document.getElementById("ajoutPhotoForm");
+    const newWorkForm = document.getElementById("ajoutPhotoForm");
 
     function formIsComplete() {
-        const imageInput = form.querySelector("#image");
-        const titleInput = form.querySelector("#title");
-        const categorySelect = form.querySelector('#category-project');
+        const imageInput = newWorkForm.querySelector("#image");
+        const titleInput = newWorkForm.querySelector("#title");
+        const categorySelect = newWorkForm.querySelector('#category-project');
         const validerButton = document.querySelector('.validerButton');
     
         if (imageInput.value.trim() === ''
@@ -278,13 +294,31 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     }
 
-    form.addEventListener("input", formIsComplete);
+    newWorkForm.addEventListener("input", formIsComplete);
 
     const btnValider = document.querySelector('.validerButton');
     btnValider.addEventListener("click", function(event) {
         if (!formIsComplete()) {
             event.preventDefault();
             alert("Veuillez remplir tous les champs du formulaire");
+        }
+    });
+
+        // 11°) Ajouter un nouveau projet grâce à l'API
+
+    newWorkForm.addEventListener('submit', async (event) => {   
+        event.preventDefault();
+        
+        const url = 'http://localhost:5678/api/works';
+        const formData = new FormData(ajoutPhotoForm);
+        const tokenKey = "tokenResponse";
+        
+        const response = await addData(url, formData, tokenKey);
+            
+        if (!response.ok) {
+            window.alert("Erreur lors de l'ajout du projet");
+        } else {
+            window.alert("Projet ajouté avec succès !");
         }
     });
 
